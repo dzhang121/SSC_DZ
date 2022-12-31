@@ -30,10 +30,31 @@ Tau = 1; %control input - determines damping here??
 system = tf([K],[Tau,1]); %1/(s+1)
 step(system)
 
-%add for loop to sweep k
+%sweep Tau
+figure
+for i=1:0.1:2
+    Tau = i;
+    system = tf([K],[Tau,1]); %1/(s+1)
+    step(system)
+    hold on
+end
+hold off
+Tau=1;
+
+%sweep K
+figure
+for i=1:5
+    K = i;
+    system = tf([K],[Tau,1]); %1/(s+1)
+    step(system)
+    hold on
+end
+hold off
+K=1;
+
 
 %% Q6-8
-%replacing s to iw in the tf of 1/(s+1)
+%replacing s to iw in the tf of 1/(s+1), or K/(Tau*s+1)
 bode(system)
 
 %manual calcs for compare:

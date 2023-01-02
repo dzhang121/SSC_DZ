@@ -16,13 +16,16 @@ xline(0)
 yline(0)
 
 %validate
+figure
 Gtf = tf(1,[1 1]); %1/(s+1)
 sys = feedback(Gtf,1,-1);
 impulse(sys)
-%same:
+%same - verifying if using tf1 as G and tf2 as H gives the same as Gtf 
+% (week 2 block diagram content):
+figure
 tf1 = tf(1,1);%1
 tf2 = tf([1 0],1);%s
-sys = feedback(tf1,tf2,-1);%feedback loop
+sys = feedback(tf1,tf2,-1);%feedback loop, -1 means unity negative feedback, by default
 impulse(sys)
 
 %% (b) F(s) = 1/(s^2-s+1)

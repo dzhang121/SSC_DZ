@@ -1,3 +1,6 @@
 ﻿*.asv
 DZ/Control_Week2/slprj
 *.slxc
+Signals_Lab/slprj/sim/varcache/final_system/tmwinternal/simulink_cache.xml
+Signals_Lab/slprj
+*.r2021a

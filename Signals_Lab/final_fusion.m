@@ -19,6 +19,7 @@ c=1/w^2;
 e=0;
 d=k;
 
+magsys = tf([e d],[c b a]);
 %% heading input 
 
 
@@ -65,8 +66,9 @@ legend('Input',...
     'Magnetic Compass Output',...
     'Interpreter','none')
 
-tab2 = uitab('Title','Error');
-axes('parent',tab2)
+% tab2 = uitab('Title','Error');
+% axes('parent',tab2)
+f2=figure;
 set(gca,'FontSize',11)
 hold on
 grid on
@@ -132,7 +134,7 @@ f = 0: 1/(N*T) : (N-1)/(N*T);
 DFT_corrected = 2* abs(DFT(1:N/2))/N;
 
 figure
-plot(f(1:N/2), DFT_corrected)
+loglog(f(1:N/2), DFT_corrected,"LineWidth",1,"color","#366718")
 hold on
 
 %output
@@ -143,6 +145,22 @@ DFT_m = fft(simout.mag_raw);
 
 DFT_m_corrected = 2* abs(DFT_m(1:N/2))/N;
 
-plot(f(1:N/2), DFT_m_corrected)
+loglog(f(1:N/2), DFT_m_corrected,"LineWidth",1,"color","#edb222")
 
-legend('input','magnetic')
+lgd2 = legend('Input','Magnetic compass');
+
+% formatting
+grid on
+grid minor
+grid minor
+
+set(gca,'FontSize',11)
+lgd2.FontWeight = "bold";
+lgd2.FontSize=11;
+
+xl = xlabel("Frequency (Hz)");
+yl = ylabel("Magnitude (°s)");
+xl.FontWeight = "bold";
+xl.FontSize=11;
+yl.FontWeight = "bold";
+yl.FontSize=11;

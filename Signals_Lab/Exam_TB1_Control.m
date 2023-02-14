@@ -29,6 +29,7 @@ C = tf([0.025,0.5],[1]);%0.5+0.025s
 
 sys = feedback(C*G,1,-1); %unity feedback of CG
 
+sys = minreal(sys); %pole-zero cancellation
 
 %% Calculate poles and zeros
 p = pole(sys);

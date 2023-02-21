@@ -12,7 +12,7 @@ P.XLim = [-10 1];
 rlocusplot(G,P)
 
 %test step response
-k = 26.7; 
+k = 26.7; %kp -> infinity
 CG = k*G;
 sys = feedback(CG,1,-1);
 step(sys)
@@ -36,7 +36,7 @@ step(sys)
 G1 = tf(1,[1 0])* G;
 rlocus(G1)
 %step2 - choose lambda1
-lambda1 = -4;
+lambda1 = -4;% arbitrary placement, lambda1 = kp here
 G2 = tf([1 -lambda1],[1 0]) * G; %K* (s-lambda1)/s *G
 rlocus(G2)
 %step3,4 - see sheet
@@ -78,16 +78,18 @@ P.XLim = [-10 1];
 rlocusplot(G,P)
 
 %NOT VIABLE
+%1. need damping ->> PD
+%2. open p to z ->>
 
 %PD %%%%%%%%%%%%%
 %step1 - choose lambda2
-lambda2 = -4;
+lambda2 = -3;%live session used -3
 G2 = tf([1 -lambda2],[1]) * G; %K* (s-lambda2) *G
 rlocus(G2)
 %step2,3 - see sheet
 
 %test step response
-k = 5.78; 
+k = 12; %set to 12 
 CG = k*G2;
 sys = feedback(CG,1,-1);
 step(sys)
@@ -174,20 +176,22 @@ CG = k*G2;
 sys = feedback(CG,1,-1);
 step(sys)
 
-
 %PID %%%%%%%%%%
 %step1 - add pole at 0
 G1 = tf(1,[1 0])* G;
 rlocus(G1)
 %step2 - choose lambda1 lambda2
-lambda1 = -4+1i;
-lambda2 = -4-1i;
+% lambda1 = -4+1i;
+% lambda2 = -4-1i;
+
+lambda1 = -5;
+lambda2 = -6;
 G2 = tf([1 -(lambda1+lambda2) lambda1*lambda2],[1 0]) * G; %K* (s-lambda1)*(s-lambda2) /s *G
 rlocus(G2)
 %step3,4 - see sheet
 
 %test step response
-k = 2.93; 
+k = 12; 
 CG = k*G2;
 sys = feedback(CG,1,-1);
 step(sys)

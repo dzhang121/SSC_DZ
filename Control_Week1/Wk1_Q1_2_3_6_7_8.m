@@ -14,12 +14,12 @@ Theta = pi/2;
 
 simout = sim('Wk1_Q1.slx','StopTime', num2str(30));
 
-% figure
-% hold on
-% grid on
-% plot(simout.tout,simout.theta)
-% plot(simout.tout,simout.thetadot)
-% legend('\theta','\thetadot')
+figure
+hold on
+grid on
+plot(simout.tout,simout.theta)
+plot(simout.tout,simout.thetadot)
+legend('\theta','\thetadot')
 
 % plot the pendulum moving 
 fnDrawPendulum(simout);

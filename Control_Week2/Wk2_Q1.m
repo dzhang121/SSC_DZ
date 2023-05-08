@@ -5,7 +5,7 @@ addpath("D:\Repos\Uni_SSC\DZ\Control_Week1\");
 %setup
 tend = 10;
 
-m=1;
+m=1;exp
 l=1;
 g=9.81;
 

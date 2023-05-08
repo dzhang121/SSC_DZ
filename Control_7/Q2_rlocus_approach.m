@@ -1,5 +1,11 @@
 purge
 
+%% example in lecture note 7 p20
+G=tf(1,[0.02,0.3,1]);
+%add pole at 0
+G1 = tf(1,[1 0])* G;
+rlocus(G1)
+
 %% Q2 (a)
 G = tf(3,[10 1]);%(a)
 

@@ -93,8 +93,10 @@ rlocus(G1)
 %step2 - choose lambda1 lambda2
 % lambda1 = -0.5+1i;
 % lambda2 = -0.5-1i; %k=0.7
-lambda1 = -0.8+1i;
-lambda2 = -0.8-1i; %k=2.29
+% lambda1 = -0.8+1i;
+% lambda2 = -0.8-1i; %k=2.29
+lambda1 = -2.5
+lambda2 = -10; %k=15
 C = tf([1 -(lambda1+lambda2) lambda1*lambda2],[1 0]) ; %K* (s-lambda1)*(s-lambda2) /s 
 CG=C*G;
 rlocus(CG)
@@ -102,7 +104,9 @@ grid on
 %use patch to overlay the desired region
 %step3,4 
 %test step responseA
-k = 2.29; 
+% k = 2.29; 
+% k=0.7;
+k=15
 %check gain values
 ki=k*lambda1*lambda2
 kp=-k*(lambda1+lambda2)
@@ -116,7 +120,7 @@ figure; step(sys); xlim([0 5])
 
 %sweep k
 figure;hold on
-for k=0.3:0.1:4
+for k=0.3:0.1:1.5%4
     step(feedback(k*CG,1,-1))
 end
 legend(cellfun(@num2str,num2cell([0.3:0.1:4]),'UniformOutput',false));
@@ -127,9 +131,9 @@ hold off
 
 %% Analytical Validation
 %Q1
-figure;bode(CG)
+figure;bode(CG2)
 
-loops=loopsens(G,C);
+loops=loopsens(G,k*C);
 figure;bode(loops.Lo,'b',loops.Si,'r',loops.Ti,'g')
 legend('open loop','sensitivity','complementary sensitivity')
 grid on
@@ -138,9 +142,9 @@ grid on
 G1 = tf([5.089],[1,0.05821,1.131]);
 G2 = tf([12.11],[1,0.2013,3.289]);
 figure;hold on
-step(feedback(C*G,1))
-step(feedback(C*G1,1))
-step(feedback(C*G2,1))
+step(feedback(k*C*G,1))
+step(feedback(k*C*G1,1))
+step(feedback(k*C*G2,1))
 hold off
 grid on
 legend('G','G1','G2')
@@ -152,4 +156,20 @@ figure
 bode(delta_G1,'r',delta_G2,'g')
 grid on
 
+%% experimental validation
+P=0
+I=0
+D=0
+C=tf([D,P,I],[1,0]);
+cl=feedback(C*G,1,-1);
+nofilter=lsim(cl,demand,time);
 
+C=tf([P+D*N, P*N+I,N*I],[1,N,0]);
+cl=feedback(C*G,1,-1);
+withfilter=lsim(cl,demand,time);
+
+
+plot(time,demand)
+plot(time,nofilter)
+plot(time,withfilter)
+plot(time,output)
